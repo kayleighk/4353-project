@@ -1,0 +1,13 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+
+    <form method="post" action="{% url 'users:profilemgmt' %}">
+        {% csrf_token %}
+        {{ profile_form.as_p }}
+
+        <button name="submit">Save</button>
+        <input type="hidden" name="next" value="{% url 'project:index' %}" />
+    </form>
+
+{% endblock content %}
