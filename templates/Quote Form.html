@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+
+    .text{
+        font-family: 'Courier New';
+        font-weight: bold;
+        font-size: 25pt;
+        background-color: antiquewhite;
+    }
+
+  .require::after {
+    content:" *";
+    color: red;
+  }
+
+  /* .addDetails {
+    position: relative;
+    bottom: -200px;
+  } 
+
+  -May add for future formatting/
+
+  */
+
+
+
+</style>
+
+<p class="text">Fuel Quote Form</p>
+
+<div>
+    <p class="require">
+    <label for="gallons">Gallons Requested: </label>
+    <input type="text" name="gallons" id="gallons" 
+    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" / 
+    min="1" max="1000000" required></p>
+</div>
+
+<!-- 
+    -Above code will only allow the user to input a numeric value of min 1 gallon, max 1,000,000 gallons requested. 
+    -May change it later to include JavaScript features, such as displaying an error message for non-numeric values.
+-->
+
+<div>
+    <p class="require">
+    <label for="address">Delivery Address: </label>
+    <input type="text" name="address" id="address" required></p>
+</div>
+
+
+<!-- -In the future, must be non-editable, and come from client profile -->
+
+<div>
+    <p class="require">
+    <label for="deliv">Delivery Date: </label>
+    <input type="date" name="deliv" id="deliv" 
+    placeholder="mm/dd/yyyy" min="01/01/2000" max="12/31/2030" required></p>
+</div>
+
+<!-- 
+    -Above code will allow the user to input values of a date, starting from min 1/1/2000 gallon, to max 12/31/2030. 
+    -May change it later to include JavaScript features, such as displaying an error message for non-numeric values, 
+    as well as automatically inputing a slash after month and day.
+-->
+
+<div>
+    <label for="price">Suggested Price per Gallon: </label>
+    <input type="text" name="price" id="price">
+</div>
+
+<!-- 
+    -Very straightforward (for now), however the above code will need to calculate a suggested price in the future.
+    -Must be numeric and non-editable.
+    -Price will be calculated by Pricing Module.
+-->
+<br> <!-- For formatting only -->
+
+<div>
+    <label for="total">Total Amount Due: </label>
+    <input type="text" name="total" id="total">
+</div>
+
+<br> <!-- For formatting only -->
+
+<!-- 
+    -Must be numeric and non-editable.
+    -It will be calculated by (# of gallons * price).
+-->
+
+<form>
+    <div>
+        <label for="additional">Additional Details: </label><br><br>
+        <textarea type="submit" name="additional" id="textboxid" rows="15" cols="30"></textarea>
+        <br><br>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+
+<!-- 
+    -Optional feature for the user.
+    -Allows the user to offer more details if they so choose.
+    -Ends with a submit button.
+-->
+
+
+</html>
