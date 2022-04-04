@@ -1,15 +1,10 @@
 from django.shortcuts import render, redirect
-<<<<<<< HEAD
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-=======
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.core import validators
 from django.core.validators import RegexValidator
 from . import models
->>>>>>> 72562e9898e1bbe97ba5a0753a859ab33e400d62
 
 def register(request):
     #REGISTER A NEW USER
@@ -30,11 +25,10 @@ def register(request):
     context = {'form': form}
     return render(request, 'registration/register.html', context)
 
-<<<<<<< HEAD
 
 def log_in(request):
     #LOG IN A USER
-    if request.method == 'POST':
+   if request.method == 'POST':
         #COMPLETED FORM
         form = AuthenticationForm(request=request, data=request.POST)
 
@@ -52,13 +46,14 @@ def log_in(request):
     #INVALID LOGIN         
     form = AuthenticationForm()
     context = {'form': form}  
-    return render(request, 'registration/login.html', context)          
+    return render(request, 'registration/login.html', context)  
 
 
 def log_out(request):
     logout(request)
     return redirect('project:index')
-=======
+
+
 class ProfileForm(forms.Form):
     # validate_slug is a Name validation regex, built into Django
     first_name = forms.CharField(label='First name:', max_length=50, validators=[validators.validate_slug])
@@ -84,4 +79,3 @@ def profile(request):
             return redirect('project:index')
     
     return render(request, 'profile_mgmt/profile_mgmt.html', {'profile_form': form})
->>>>>>> 72562e9898e1bbe97ba5a0753a859ab33e400d62
