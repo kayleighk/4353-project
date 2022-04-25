@@ -1,4 +1,7 @@
+from django.conf import settings
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 class USState(models.Model):
@@ -105,3 +108,23 @@ class USState(models.Model):
         (Wisconsin, "Wisconsin"),
         (Wyoming, "Wyoming"),
     ]
+
+class ProfileModel(models.Model):
+    
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+
+    # validate_slug is a Name validation regex, built into Django
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+
+    address_1 = models.CharField(max_length=100)
+    address_2 = models.CharField(max_length=120,blank=True)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100,choices=USState.StatesChoices) # States model
+    
+    # Validates 5 numbers, exactly
+    zipcode = models.CharField(max_length=5) 

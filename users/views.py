@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
+from users.models import ProfileModel, USState
 from django.core import validators
 from django.core.validators import RegexValidator
-from . import models
 
 def register(request):
     #REGISTER A NEW USER
@@ -54,7 +54,12 @@ def log_out(request):
     return redirect('project:index')
 
 
-class ProfileForm(forms.Form):
+class ProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = ProfileModel
+        fields = ['first_name', 'last_name', 'address_1', 'address_2','city', 'state', 'zipcode']
+
     # validate_slug is a Name validation regex, built into Django
     first_name = forms.CharField(label='First name:', max_length=50, validators=[validators.validate_slug])
     last_name = forms.CharField(label='Last name:', max_length=50, validators=[validators.validate_slug])
@@ -64,18 +69,24 @@ class ProfileForm(forms.Form):
         help_text='<br/>The apartment, suite, unit number, or other address designation.', 
         required=False)
     city = forms.CharField(label='City:', max_length=100)
-    state = forms.ChoiceField(choices=models.USState.StatesChoices, label='State') # States model
+    state = forms.ChoiceField(choices=USState.StatesChoices, label='State') # States model
     
     # Validates 5 numbers, exactly
     zipcode = forms.CharField(label='Zipcode', max_length=5, validators=[RegexValidator(regex='[0-9]{5}')])        
 
 
 def profile(request):
+    profile=ProfileModel.objects.get(pk=request.user.id)
     if request.method != 'POST':
-        form = ProfileForm()
+        form = ProfileForm(instance=profile)
     else: 
         form = ProfileForm(request.POST)
         if form.is_valid():
+
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+
             return redirect('project:index')
     
     return render(request, 'profile_mgmt/profile_mgmt.html', {'profile_form': form})
