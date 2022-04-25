@@ -28,8 +28,8 @@ def register(request):
 
 def log_in(request):
     #LOG IN A USER
-   if request.method == 'POST':
-        #COMPLETED FORM
+    if request.method == 'POST':
+    #COMPLETED FORM
         form = AuthenticationForm(request=request, data=request.POST)
 
         if form.is_valid():
