@@ -105,3 +105,4 @@ class USState(models.Model):
         (Wisconsin, "Wisconsin"),
         (Wyoming, "Wyoming"),
     ]
+
