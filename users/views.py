@@ -80,7 +80,10 @@ class ProfileForm(forms.ModelForm):
 def profile(request):
     profile=ProfileModel.objects.get(pk=request.user.id)
     if request.method != 'POST':
-        form = ProfileForm(instance=profile)
+        if profile:
+            form = ProfileForm(instance=profile)
+        else:
+            form = ProfileForm()
     else: 
         form = ProfileForm(request.POST)
         if form.is_valid():
