@@ -1,3 +1,5 @@
+-- It should be noted that this is a mock-up representation of the SQLite database that exists. Django handles the automatic creation and modification of the database via Python code that we write.
+
 -- User Table
 CREATE TABLE IF NOT EXISTS UserTable (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
@@ -73,10 +75,10 @@ VALUES
 CREATE TABLE IF NOT EXISTS FuelQuoteTable(
     user_id INTEGER,
     quote_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	gallons FLOAT NOT NULL,
-    address VARCHAR(150) NOT NULL,
-    date datetime NULL,
-    amount FLOAT NOT NULL
+	gallons_requested FLOAT NOT NULL,
+    delivery_address VARCHAR(150) NOT NULL,
+    delivery_date datetime NULL,
+    total_amount_due FLOAT NOT NULL
 );
 ALTER TABLE FuelQuoteTable
 ADD FOREIGN KEY (user_id) REFERENCES UserTable(user_id);

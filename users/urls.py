@@ -16,5 +16,10 @@ urlpatterns = [
     #LOGOUT PAGE
     path('logout/', views.log_out, name='logout'),
 
-    path('profile/', views.profile, name='profilemgmt')
+    path('profile/', views.profile, name='profilemgmt'),
+
+    path('quotehistory/', views.fuelQuoteHistory, name='fuelquotehistory'),
+
+    path('quoteform/', views.fuelQuoteRequest, name='fuelquoteform')
+
 ]

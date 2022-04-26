@@ -128,3 +128,46 @@ class ProfileModel(models.Model):
     
     # Validates 5 numbers, exactly
     zipcode = models.CharField(max_length=5) 
+
+class FuelQuoteModel(models.Model):
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+    # profile = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
+
+    gallons_requested = models.FloatField()
+    delivery_address = models.CharField(max_length=100)
+    # delivery_address_2 = models.CharField(max_length=100,blank=True)
+    delivery_date = models.DateField(blank=True)
+    total_amount_due = models.FloatField()
+
+    # @property
+    def calculate_suggested_price(self,profile,has_history):
+        
+        # Location Factor = 2% for Texas, 4% for out of state.
+        location_factor = (0.02 if profile.state=="TX" else 0.04)
+
+        # Rate History Factor = 1% if client requested fuel before, 0% if no history (you can query fuel quote table to check if there are any rows for the client)
+        
+        rate_history_factor = (0.01 if has_history else 0.00)
+
+        # Gallons Requested Factor = 2% if more than 1000 Gallons, 3% if less
+        gallons_requested_factor = (0.02 if float(self.gallons_requested) > 1000 else 0.03)
+
+        # Company Profit Factor = 10% always
+        company_profit_factor = 0.10
+
+        # Current price per gallon = $1.50 (this is the price what distributor gets from refinery and it varies based upon crude price. But we are keeping it constant for simplicity)
+        currentprice = 1.50
+
+        margin = currentprice * (location_factor - rate_history_factor + gallons_requested_factor + company_profit_factor)
+
+        suggested_price = margin + currentprice
+        return suggested_price
+
+    # Get Quote
+    # @property
+    def calculate_total_amount_due(self, profile, has_history):
+        return float(self.gallons_requested) * self.calculate_suggested_price(profile, has_history)
