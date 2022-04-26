@@ -79,3 +79,5 @@ def test_profile(client):
     c = Client()
     response = c.post('/users/profile/', {'username': 'notjohn', 'password': 'password'})
     assert response.status_code == 200
+
+
