@@ -129,13 +129,13 @@ class ProfileModel(models.Model):
     # Validates 5 numbers, exactly
     zipcode = models.CharField(max_length=5) 
 
-class FuelQuote(models.Model):
+class FuelQuoteModel(models.Model):
 
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE
     )
-    profile = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
+    # profile = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
 
     gallons_requested = models.FloatField()
     delivery_address = models.CharField(max_length=100)

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
-from users.models import ProfileModel, USState
+from users.models import FuelQuoteModel, ProfileModel, USState
 from django.core import validators
 from django.core.validators import RegexValidator
 
@@ -90,3 +90,16 @@ def profile(request):
             return redirect('project:index')
     
     return render(request, 'profile_mgmt/profile_mgmt.html', {'profile_form': form})
+
+def fuelQuoteForm(request):
+    pass
+    # return render(request, 'fuel_quote/requestfuelquote.html', {'fuelquoteform': form})
+
+def fuelQuoteHistory(request):
+
+    fuelquotehistory = FuelQuoteModel.objects.filter(user_id=request.user.id)
+
+    if fuelquotehistory:
+        return render(request, 'fuel_quote/fuelquotehistory.html', {'fuelquotehistory_exists':True, 'fuelquotehistory': fuelquotehistory})
+    else:
+        return render(request, 'fuel_quote/fuelquotehistory.html', {'fuelquotehistory_exists':False})
