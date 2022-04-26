@@ -1,0 +1,49 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+
+    {% if profileaddress_exists %}
+
+        <form method="post" action="{% url 'users:fuelquoteform' %}">
+        {% csrf_token %}
+
+        {% for field in quoteform %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+
+            {% if field.name == 'total_amount_due'%}
+            {{ field.label_tag }} {{ field.value | floatformat:2  }}
+            {% elif field.name == 'suggested_price'%}
+            {{ field.label_tag }} {{ field.value }}
+            {% elif field.name == 'delivery_address'%}
+            {{ field.label_tag }} {{ field.value }}
+            {% else %}
+            {{ field.label_tag }} {{ field }}
+            {% endif %}
+
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+        </div>
+        <br>
+        {% endfor %}
+
+        <button type="submit" name="get_quote" value='get_quote'>Get Quote</button>
+        {% if disablesubmitbutton %}
+
+        {% else %}
+        <button type="submit" name="submit_quote" value='submit_quote'>Submit Quote</button>
+        {% endif%}
+        <input type="hidden" name="next" value="{% url 'project:index' %}" />
+        </form>
+
+    {% else %}
+
+    <p>{{ user.username }} has no delivery address!</p>
+    <a href="{% url 'users:profilemgmt' %}">
+        <p> Please enter here to fill out your delivery address and profile. </p>
+    </a>
+
+    {% endif %}
+
+{% endblock content %}

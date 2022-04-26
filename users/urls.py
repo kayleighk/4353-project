@@ -20,6 +20,6 @@ urlpatterns = [
 
     path('quotehistory/', views.fuelQuoteHistory, name='fuelquotehistory'),
 
-    path('fuelquoteform/', views.profile, name='fuelquoteform')
+    path('quoteform/', views.fuelQuoteRequest, name='fuelquoteform')
 
 ]

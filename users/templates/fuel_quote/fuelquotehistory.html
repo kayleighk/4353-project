@@ -12,7 +12,7 @@
 
     {% if fuelquotehistory_exists %}
 
-    <table>
+    <table border="1">
         <thead>
             <th>Gallons Requested</th>
             <th>Delivery Address</th>
@@ -20,12 +20,12 @@
             <th>Total Amount Due</th>
         </thead>
         <tbody>
-            {% for fuelquote in fuelquotehistory.objects %}
+            {% for fuelquote in fuelquotehistory %}
             <tr>
                 <td>{{ fuelquote.gallons_requested }}</td>
                 <td>{{ fuelquote.delivery_address }}</td>
                 <td>{{ fuelquote.delivery_date }}</td>
-                <td>{{ fuelquote.total_amount_due }}</td>
+                <td>{{ fuelquote.total_amount_due | floatformat:2 }}</td>
             </tr>
             {% endfor %}
         </tbody>
