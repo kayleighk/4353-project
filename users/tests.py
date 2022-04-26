@@ -77,7 +77,7 @@ def test_register(client):
 def test_profile(client):
     User.objects.create_user(username = 'john', password = 'johnpassword')
     c = Client()
-    response = c.post('/users/profile/', {'username': 'notjohn', 'password': 'password'})
+    response = c.post('/users/profile/', {'username': 'john', 'password': 'password'})
     assert response.status_code == 200
 
 
