@@ -1,0 +1,40 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+
+    {% comment %} <form method="post" action="{% url 'users:profilemgmt' %}">
+        {% csrf_token %}
+        {{ profile_form.as_p }}
+
+        <button name="submit">Save</button>
+        <input type="hidden" name="next" value="{% url 'project:index' %}" />
+    </form> {% endcomment %}
+
+    {% if fuelquotehistory_exists %}
+
+    <table border="1">
+        <thead>
+            <th>Gallons Requested</th>
+            <th>Delivery Address</th>
+            <th>Delivery Date</th>
+            <th>Total Amount Due</th>
+        </thead>
+        <tbody>
+            {% for fuelquote in fuelquotehistory %}
+            <tr>
+                <td>{{ fuelquote.gallons_requested }}</td>
+                <td>{{ fuelquote.delivery_address }}</td>
+                <td>{{ fuelquote.delivery_date }}</td>
+                <td>{{ fuelquote.total_amount_due | floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+
+    <p>{{ user.username }} has no fuel quote history!</p>
+
+    {% endif %}
+
+{% endblock content %}
