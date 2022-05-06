@@ -3,6 +3,7 @@ from django.test import Client
 from django.contrib.auth.models import User
 import pytest
 from django.urls import reverse
+from users.models import FuelQuoteModel, ProfileModel
 
 
 # Create your tests here.
@@ -79,3 +80,13 @@ def test_profile(client):
     c = Client()
     response = c.post('/users/profile/', {'username': 'notjohn', 'password': 'password'})
     assert response.status_code == 200
+
+class FuelTests(TestCase):
+
+    fixtures = ['mydata.json']
+
+    def test_something(self):
+        profile=ProfileModel.objects.get(pk=4)
+        fuelquotemodel = FuelQuoteModel.objects.get(id=9)
+
+        assert fuelquotemodel.calculate_total_amount_due(profile, True) == 43.5

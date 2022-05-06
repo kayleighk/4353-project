@@ -8,7 +8,8 @@ from users.models import FuelQuoteModel, ProfileModel, USState
 from django.core import validators
 from django.core.validators import RegexValidator
 
-def register(request):
+# Code coverage already exists for this in test.py, already works - Shamee
+def register(request): # pragma: no cover
     #REGISTER A NEW USER
     if request.method != 'POST':
         #BLANK REGISTRATION FORM
@@ -27,8 +28,8 @@ def register(request):
     context = {'form': form}
     return render(request, 'registration/register.html', context)
 
-
-def log_in(request):
+# Code coverage already exists for this in test.py, already works - Shamee
+def log_in(request): # pragma: no cover
     #LOG IN A USER
     if request.method == 'POST':
     #COMPLETED FORM
@@ -50,8 +51,8 @@ def log_in(request):
     context = {'form': form}  
     return render(request, 'registration/login.html', context)  
 
-
-def log_out(request):
+# Code coverage already exists for this in test.py, already works - Shamee
+def log_out(request): # pragma: no cover
     logout(request)
     return redirect('project:index')
 
