@@ -1,0 +1,11 @@
+[run]
+source = .
+omit = 
+    proj4353/*
+    users/migrations/*
+    project/*
+    manage.py
+
+[report]
+show_missing = True
+skip_covered = False

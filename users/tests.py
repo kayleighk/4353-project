@@ -80,7 +80,7 @@ def test_register(client):
 def test_profile(client):
     User.objects.create_user(username = 'john', password = 'johnpassword')
     c = Client()
-    response = c.post('/users/profile/', {'username': 'john', 'password': 'password'})
+    response = c.post('/users/profile/', {'username': 'john', 'password': 'johnpassword'})
     assert response.status_code == 200
 
 #PASSED
@@ -218,3 +218,13 @@ def test_fuelquote_model(client):
     assert quote.delivery_date == datetime.date.today()
     assert quote.total_amount_due == 100.0
     assert quote.delivery_address == '1234 Test Drive'
+
+class FuelTests(TestCase):
+
+    fixtures = ['mydata.json']
+
+    def test_something(self):
+        profile=ProfileModel.objects.get(pk=4)
+        fuelquotemodel = FuelQuoteModel.objects.get(id=9)
+
+        assert fuelquotemodel.calculate_total_amount_due(profile, True) == 43.5
