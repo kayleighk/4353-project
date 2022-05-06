@@ -78,7 +78,10 @@ class ProfileForm(forms.ModelForm):
 
 
 def profile(request):
-    profile=ProfileModel.objects.get(pk=request.user.id)
+    try:
+        profile=ProfileModel.objects.get(pk=request.user.id)
+    except ProfileModel.DoesNotExist: 
+        profile = None
     if request.method != 'POST':
         if profile:
             form = ProfileForm(instance=profile)
@@ -110,9 +113,12 @@ class FuelQuoteForm(forms.Form):
 
 def fuelQuoteRequest(request):
 
-    profile=ProfileModel.objects.get(pk=request.user.id)
+    try:
+        profile=ProfileModel.objects.get(pk=request.user.id)
+    except ProfileModel.DoesNotExist: 
+        profile = None
 
-    if profile.address_1:
+    if profile and profile.address_1:
         if request.method != 'POST':
             form = FuelQuoteForm({'delivery_address': profile.address_1})
         
